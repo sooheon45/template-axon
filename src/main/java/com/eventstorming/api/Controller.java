@@ -1,4 +1,3 @@
-
 forEach: Aggregate
 fileName: {{namePascalCase}}Controller.java
 path: {{boundedContext.name}}/{{{options.packagePath}}}/api
@@ -65,11 +64,7 @@ public class {{ namePascalCase }}Controller {
 
                   resource.set{{aggregate.aggregateRoot.keyFieldDescriptor.namePascalCase}}(({{aggregate.aggregateRoot.keyFieldDescriptor.className}})id);
                   
-                  EntityModel<{{ ../namePascalCase }}Aggregate> model = EntityModel.of(resource);
-                  model
-                        .add(Link.of("/{{ ../namePlural }}/" + resource.get{{aggregate.aggregateRoot.keyFieldDescriptor.namePascalCase}}()).withSelfRel());
-
-                  return new ResponseEntity<>(model, HttpStatus.OK);
+                  return new ResponseEntity<>(hateoas(resource), HttpStatus.OK);
             }
       );
 
@@ -103,6 +98,33 @@ public class {{ namePascalCase }}Controller {
                 
       return new ResponseEntity<>(model, HttpStatus.OK);
   } 
+
+
+  EntityModel<{{namePascalCase}}Aggregate> hateoas({{namePascalCase}}Aggregate resource){
+    EntityModel<{{namePascalCase}}Aggregate> model = EntityModel.of(
+        resource
+    );
+
+    model.add(
+        Link
+        .of("/{{namePlural}}/" + resource.get{{aggregateRoot.keyFieldDescriptor.namePascalCase}}())
+        .withSelfRel()
+    );
+
+    {{#commands}}
+      {{#ifEquals isRestRepository false}}
+          model.add(
+              Link
+              .of("/{{../namePlural}}/" + resource.get{{@root.aggregateRoot.keyFieldDescriptor.namePascalCase}}() + "/{{controllerInfo.apiPath}}")
+              .withRel("{{controllerInfo.apiPath}}")
+          );
+      {{/ifEquals}}
+
+    {{/commands}}
+
+    return model;
+  }
+
 
 
 }
