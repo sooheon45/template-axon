@@ -164,6 +164,8 @@ window.$HandleBars.registerHelper('checkBigDecimal', function (fieldDescriptors)
     }
 });
 
+// changed
+
   var checkCommandIsRepositoryPost = function (command) {
     return (command.isRestRepository && command.restRepositoryInfo.method == "POST")
   };
