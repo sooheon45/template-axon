@@ -1,6 +1,3 @@
-
-
-
 forEach: Aggregate
 fileName: {{namePascalCase}}Aggregate.java
 path: {{boundedContext.name}}/{{{options.packagePath}}}/aggregate
@@ -113,11 +110,14 @@ public class {{namePascalCase}}Aggregate {
 
     {{#events}}
 //<<< EDA / Event Sourcing
-
+    
     @EventSourcingHandler
     public void on({{namePascalCase}}Event event) {
+
+        {{#isCreationEvent}}
         BeanUtils.copyProperties(event, this);
-        
+        {{/isCreationEvent}}
+
     }
 
     {{/events}}
@@ -128,6 +128,20 @@ public class {{namePascalCase}}Aggregate {
 
 
 <function>
+
+window.$HandleBars.registerHelper('jp', function (jsonPath) {
+    var evaluatedVal = window.jp.query(this, jsonPath);
+
+    return evaluatedVal;
+});
+
+window.$HandleBars.registerHelper('isCreationEvent', function (options) {
+    for(var i=0; i<this.incomingCommandRefs.length; i++)
+        if(checkCommandIsRepositoryPost(this.incomingCommandRefs[i].value)) return options.fn(this);
+
+    return options.inverse(this);
+});
+
 window.$HandleBars.registerHelper('checkDateType', function (fieldDescriptors) {
     for(var i = 0; i < fieldDescriptors.length; i ++ ){
         if(fieldDescriptors[i] && fieldDescriptors[i].className == 'Date'){
@@ -150,7 +164,9 @@ window.$HandleBars.registerHelper('checkBigDecimal', function (fieldDescriptors)
     }
 });
 
-  window.$HandleBars.registerHelper('isRepositoryPost', function (command) {
+  var checkCommandIsRepositoryPost = function (command) {
     return (command.isRestRepository && command.restRepositoryInfo.method == "POST")
-  })
+  };
+
+  window.$HandleBars.registerHelper('isRepositoryPost', checkCommandIsRepositoryPost);
 </function>
