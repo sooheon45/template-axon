@@ -1,4 +1,5 @@
 
+
 forEach: View
 representativeFor: View
 fileName: {{namePascalCase}}Query.java

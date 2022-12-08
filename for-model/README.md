@@ -1,5 +1,3 @@
-
-
 forEach: Model
 fileName: README.md
 path: for-model
@@ -35,6 +33,7 @@ window.$HandleBars.registerHelper('ifEquals', function (arg1, arg2, options) {
 });
 
 window.$HandleBars.registerHelper('ifContains', function (jsonPath, value, options) {
+    
     var evaluatedVal = window.jp.query(this, jsonPath);
     if( evaluatedVal == value || evaluatedVal.includes(value)
         //(Array.isArray(evaluatedVal) && evaluatedVal.includes(value))
