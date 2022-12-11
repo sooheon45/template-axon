@@ -1,4 +1,3 @@
-
 forEach: View
 representativeFor: View
 fileName: {{namePascalCase}}CQRSHandlerReusingAggregate.java
@@ -85,7 +84,7 @@ public class {{namePascalCase}}CQRSHandlerReusingAggregate {
 
 <function>
  
-this.aggregate = this.boundedContext.aggregates[0];
+//this.aggregate = this.boundedContext.aggregates[0];
 
 this.contexts.isNotQueryForAggregate = (this.dataProjection != "query-for-aggregate")
 
