@@ -1,15 +1,8 @@
-
-
-
-
-
-
-
 forEach: Policy
 fileName: {{namePascalCase}}Saga.java
 
 path: {{boundedContext.name}}/{{{options.packagePath}}}/saga
-except: {{#except fieldDescriptors}}{{/except}}
+except: {{#isSaga}}false{{else}}true{{/isSaga}}
 
 ---
 package {{options.package}}.saga;
@@ -67,40 +60,46 @@ public class {{namePascalCase}}Saga {
 
 <function>
 
-var eventByNames = []
-var commandByNames = {}
-this.outgoingCommandRefs.forEach(
-    commandRef => {
-        commandByNames[commandRef.name] = commandRef.value
-    }
-)
+debugger; 
+if(this.isSaga){
 
-var me = this;
-var i = 1;
-var maxSeq = 0;
-this.incomingEventRefs.forEach(
-    eventRef => {
-        var nameNumberPart = eventRef.name.replace(/\D/g, "");
-//        alert(nameNumberPart);
-        var sequence = parseInt(nameNumberPart); // i
-        if(sequence > maxSeq) maxSeq = sequence;
+    var eventByNames = []
+    var commandByNames = {}
+    this.outgoingCommandRefs.forEach(
+        commandRef => {
+            commandByNames[commandRef.name] = commandRef.value
+        }
+    )
 
-        var commandSequence = sequence + 1;
-        eventByNames[sequence] = {
-            event: eventRef.value,
-            command: commandByNames[commandSequence],
-            compensateCommand: commandByNames[commandSequence+"'"],
-            isStartSaga: sequence ==1,
-            isEndSaga: false
-        };
-    }
-)
+    var me = this;
+    var i = 1;
+    var maxSeq = 0;
+    this.incomingEventRefs.forEach(
+        eventRef => {
+            var nameNumberPart = eventRef.name.replace(/\D/g, "");
+    //        alert(nameNumberPart);
+            var sequence = parseInt(nameNumberPart); // i
+            if(sequence > maxSeq) maxSeq = sequence;
 
-eventByNames[maxSeq].isEndSaga = true;
-//alert('x')
-//alert(JSON.stringify(commandByNames))
+            var commandSequence = sequence + 1;
+            eventByNames[sequence] = {
+                event: eventRef.value,
+                command: commandByNames[commandSequence],
+                compensateCommand: commandByNames[commandSequence+"'"],
+                isStartSaga: sequence ==1,
+                isEndSaga: false
+            };
+        }
+    )
 
-this.contexts.sagaEvents = eventByNames; 
+    eventByNames[maxSeq].isEndSaga = true;
+    //alert('x')
+    //alert(JSON.stringify(commandByNames))
+
+    this.contexts.sagaEvents = eventByNames; 
+
+
+}
 
 window.$HandleBars.registerHelper('except', function (fieldDescriptors) {
     return (fieldDescriptors && fieldDescriptors.length == 0);
