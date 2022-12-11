@@ -1,6 +1,8 @@
 forEach: View
 fileName: {{namePascalCase}}Query.vue
 path: frontend/src/components
+except: {{#ifEquals dataProjection "query-for-aggregate"}}false{{else}}true{{/ifEquals}}
+
 ---
 <template>
 
@@ -82,6 +84,7 @@ path: frontend/src/components
 
 
 <function>
+
     window.$HandleBars.registerHelper('print', function (value) {
         console.log(value)
     });
