@@ -1,5 +1,3 @@
-
-
 forEach: Aggregate
 fileName: {{namePascalCase}}Cards.vue
 path: frontend/src/components/listers
@@ -123,42 +121,43 @@ path: frontend/src/components/listers
         async created() {
             await this.search();
         },
-        async search(query) {
-            var me = this;
-            if(me.offline){
-                if(!me.values) me.values = [];
-                return;
-            } 
-
-            var temp = null;
-            if(query!=null){
-                temp = await axios.get(axios.fixUrl('/{{namePlural}}/' + query.apiPath), {params: query.parameters})
-            }else{
-                temp = await axios.get(axios.fixUrl('/{{namePlural}}'))
-            }
-
-            {{#if (checkGeneralization aggregateRoot.entities.relations nameCamelCase)}}
-            if(temp.data._embedded && typeof temp.data._embedded == 'object') {
-                me.btnList = [{{#each aggregateRoot.entities.relations}}{{#if (isGeneralization targetElement.namePascalCase ../namePascalCase relationType)}}"{{namePascalCase}}",{{/if}}{{/each}}];
-                Object.values(temp.data._embedded).forEach(function(val) {
-                    if(val.length > 0) {
-                        me.values = [...me.values, ...val]
-                    }
-                })
-            }
-            {{else}}
-            me.values = temp.data._embedded.{{namePlural}};
-            {{/if}}
-            
-            me.newValue = {
-            {{#aggregateRoot.fieldDescriptors}}
-            {{#if (isNotId nameCamelCase)}}
-                '{{nameCamelCase}}': {{#setDefaultValue className isVO}}{{/setDefaultValue}},
-            {{/if}}
-            {{/aggregateRoot.fieldDescriptors}}
-            }
-        },
         methods:{
+            async search(query) {
+                var me = this;
+                if(me.offline){
+                    if(!me.values) me.values = [];
+                    return;
+                } 
+
+                var temp = null;
+                if(query!=null){
+                    temp = await axios.get(axios.fixUrl('/{{namePlural}}/' + query.apiPath), {params: query.parameters})
+                }else{
+                    temp = await axios.get(axios.fixUrl('/{{namePlural}}'))
+                }
+
+                {{#if (checkGeneralization aggregateRoot.entities.relations nameCamelCase)}}
+                if(temp.data._embedded && typeof temp.data._embedded == 'object') {
+                    me.btnList = [{{#each aggregateRoot.entities.relations}}{{#if (isGeneralization targetElement.namePascalCase ../namePascalCase relationType)}}"{{namePascalCase}}",{{/if}}{{/each}}];
+                    Object.values(temp.data._embedded).forEach(function(val) {
+                        if(val.length > 0) {
+                            me.values = [...me.values, ...val]
+                        }
+                    })
+                }
+                {{else}}
+                me.values = temp.data._embedded.{{namePlural}};
+                {{/if}}
+                
+                me.newValue = {
+                {{#aggregateRoot.fieldDescriptors}}
+                {{#if (isNotId nameCamelCase)}}
+                    '{{nameCamelCase}}': {{#setDefaultValue className isVO}}{{/setDefaultValue}},
+                {{/if}}
+                {{/aggregateRoot.fieldDescriptors}}
+                }
+            },
+
             {{#if (checkGeneralization aggregateRoot.entities.relations nameCamelCase)}}
             dialogOpen(val) {
                 this.childType = val;
