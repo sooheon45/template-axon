@@ -20,10 +20,6 @@ path: frontend/src/components
             {{namePascalCase}}
         </v-card-title >
 
-        {{#contexts.views}}
-            {{nameCamelCase}}
-        {{/contexts.views}}
-
         <v-card-text>
         {{#aggregateRoot.fieldDescriptors}}
         {{#if (isNotId nameCamelCase)}}
@@ -396,14 +392,6 @@ path: frontend/src/components
 
 
 <function>
-    var me = this;
-    me.contexts.views = [];
-    this.boundedContext.views.forEach(view=>{
-        if(view.aggregate == me && view.dataProjection=="query-for-aggregate"){
-            me.contexts.views.push(view);
-        }
-    })
-
 
     window.$HandleBars.registerHelper('checkCommandPut', function (info, options) {
         if(info.endsWith('PUT')){

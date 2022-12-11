@@ -4,6 +4,14 @@ path: frontend/src/components/listers
 ---
 <template>
     <div>
+
+
+
+        {{#contexts.views}}
+            <{{namePascalCase}}Query @search="search"></{{namePascalCase}}Query>
+        {{/contexts.views}}
+
+
         {{#if (checkGeneralization aggregateRoot.entities.relations nameCamelCase)}}
         <h1 style = "margin-left:4.5%; margin-top:-10px; cursor:pointer;" @click="load">{{namePascalCase}}</h1>
         <v-select
@@ -111,13 +119,22 @@ path: frontend/src/components/listers
             {{/if}}
         }),
         async created() {
+            await search();
+        },
+        async search(query) {
             var me = this;
             if(me.offline){
                 if(!me.values) me.values = [];
                 return;
             } 
 
-            var temp = await axios.get(axios.fixUrl('/{{namePlural}}'))
+            var temp = null;
+            if(query!=null){
+                temp = await axios.get(axios.fixUrl('/{{namePlural}}/' + query.apiPath), {params: query.parameters})
+            }else{
+                temp = await axios.get(axios.fixUrl('/{{namePlural}}'))
+            }
+
             {{#if (checkGeneralization aggregateRoot.entities.relations nameCamelCase)}}
             if(temp.data._embedded && typeof temp.data._embedded == 'object') {
                 me.btnList = [{{#each aggregateRoot.entities.relations}}{{#if (isGeneralization targetElement.namePascalCase ../namePascalCase relationType)}}"{{namePascalCase}}",{{/if}}{{/each}}];
@@ -212,6 +229,16 @@ path: frontend/src/components/listers
 
 
 <function>
+
+    var me = this;
+    me.contexts.views = [];
+    this.boundedContext.views.forEach(view=>{
+        if(view.aggregate == me && view.dataProjection=="query-for-aggregate"){
+            me.contexts.views.push(view);
+        }
+    })
+
+
     window.$HandleBars.registerHelper('isNotId', function (className) {
         return (className != 'id')
     })

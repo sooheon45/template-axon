@@ -14,16 +14,16 @@ except: {{#ifEquals dataProjection "query-for-aggregate"}}false{{else}}true{{/if
         <v-card-text>
         {{#queryParameters}}
         {{#if (isPrimitive className)}}
-            <{{getPrimitiveType className}} label="{{namePascalCase}}" v-model="value.{{nameCamelCase}}" :editMode="editMode"/>
+            <{{getPrimitiveType className}} label="{{namePascalCase}}" v-model="value.parameters.{{nameCamelCase}}" :editMode="editMode"/>
         {{else}}
         {{#checkVO className}}
-            <{{className}} offline label="{{namePascalCase}}" v-model="value.{{nameCamelCase}}" :editMode="editMode" @change="change"/>
+            <{{className}} offline label="{{namePascalCase}}" v-model="value.parameters.{{nameCamelCase}}" :editMode="editMode" @change="change"/>
         {{/checkVO}}
         {{#checkEntityMember className}}
-            <{{className}} offline label="{{namePascalCase}}" v-model="value.{{nameCamelCase}}" :editMode="editMode" @change="change"/>
+            <{{className}} offline label="{{namePascalCase}}" v-model="value.parameters.{{nameCamelCase}}" :editMode="editMode" @change="change"/>
         {{/checkEntityMember}}
         {{#checkListOfEntityMember className}}
-            <{{getEntityClassNameOfList className}}List offline label="{{namePascalCase}}" v-model="value.{{nameCamelCase}}" :editMode="editMode" @change="change"/>
+            <{{getEntityClassNameOfList className}}List offline label="{{namePascalCase}}" v-model="value.parameters.{{nameCamelCase}}" :editMode="editMode" @change="change"/>
         {{/checkListOfEntityMember}}
         {{/if}}
         {{/queryParameters}}
@@ -34,17 +34,9 @@ except: {{#ifEquals dataProjection "query-for-aggregate"}}false{{else}}true{{/if
             <v-btn
                     color="deep-purple lighten-2"
                     text
-                    @click="{{nameCamelCase}}"
+                    @click="search"
             >
-                {{namePascalCase}}
-            </v-btn>
-            
-            <v-btn
-                    color="deep-purple lighten-2"
-                    text
-                    @click="close"
-            >
-                Close
+                Search
             </v-btn>
         </v-card-actions>
     </v-card>
@@ -59,11 +51,14 @@ except: {{#ifEquals dataProjection "query-for-aggregate"}}false{{else}}true{{/if
         props: {},
         data: () => ({
             editMode: true,
-            value: {},
+            value: {
+                apiPath: '{{queryApiPath}}',
+                parameters: {}
+            },
         }),
         created() {
         {{#fieldDescriptors}}
-            this.value.{{nameCamelCase}} = {{#setDefaultValue className}}{{/setDefaultValue}};
+            this.value.parameters.{{nameCamelCase}} = {{#setDefaultValue className}}{{/setDefaultValue}};
         {{/fieldDescriptors}}
         },
         watch: {
