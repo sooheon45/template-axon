@@ -1,4 +1,3 @@
-
 forEach: Aggregate
 fileName: {{namePascalCase}}.vue
 path: frontend/src/components
@@ -20,6 +19,10 @@ path: frontend/src/components
         <v-card-title v-else>
             {{namePascalCase}}
         </v-card-title >
+
+        {{#contexts.views}}
+            {{nameCamelCase}}
+        {{/contexts.views}}
 
         <v-card-text>
         {{#aggregateRoot.fieldDescriptors}}
@@ -393,6 +396,15 @@ path: frontend/src/components
 
 
 <function>
+    var me = this;
+    me.contexts.views = [];
+    this.boundedContext.views.forEach(view=>{
+        if(view.aggregate == me && view.dataProjection=="query-for-aggregate"){
+            me.contexts.views.push(view);
+        }
+    })
+
+
     window.$HandleBars.registerHelper('checkCommandPut', function (info, options) {
         if(info.endsWith('PUT')){
             return options.fn(this);
@@ -507,23 +519,23 @@ path: frontend/src/components
     })
 
     window.$HandleBars.registerHelper('isSelectedSecurity', function (selectedSecurity) {
-		try{
-			if(!selectedSecurity)
-				return false;
+        try{
+            if(!selectedSecurity)
+                return false;
 
-			if(selectedSecurity == 'isKeycloakSecurity'){
-				return true;
-			}
+            if(selectedSecurity == 'isKeycloakSecurity'){
+                return true;
+            }
 
-			return;
-		} catch(e){
-		    console.log(e)
-		}
-  	});
+            return;
+        } catch(e){
+            console.log(e)
+        }
+    });
 
     window.$HandleBars.registerHelper('hasRestRepository', function (commands) {
-		try{
-			if(commands == "undefined") {
+        try{
+            if(commands == "undefined") {
                 return options.fn(this);
             }
             var hasRestRepository = false;
@@ -535,11 +547,11 @@ path: frontend/src/components
                 }
             }
 
-			return hasRestRepository;
-		} catch(e){
-		    console.log(e)
-		}
-  	});
+            return hasRestRepository;
+        } catch(e){
+            console.log(e)
+        }
+    });
 
     window.$HandleBars.registerHelper('attachedActorName', function (actorName, options) {
         try {
@@ -694,3 +706,4 @@ path: frontend/src/components
     })
 
 </function>
+
