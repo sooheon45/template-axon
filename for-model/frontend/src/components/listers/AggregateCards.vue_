@@ -1,5 +1,3 @@
-
-
 forEach: Aggregate
 fileName: {{namePascalCase}}Cards.vue
 path: frontend/src/components/listers
@@ -121,7 +119,7 @@ path: frontend/src/components/listers
             {{/if}}
         }),
         async created() {
-            await search();
+            await this.search();
         },
         async search(query) {
             var me = this;
