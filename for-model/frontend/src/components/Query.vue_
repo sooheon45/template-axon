@@ -185,7 +185,7 @@ except: {{#ifEquals dataProjection "query-for-aggregate"}}false{{else}}true{{/if
         } else if(className.endsWith("Boolean")) {
             return false;
         } else if(className.endsWith("Date")) {
-            return "'" + date + "'";
+            return "new Date()";
         } else if(className.includes("List")) {
             return "[]"
         } else {
