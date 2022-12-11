@@ -64,8 +64,8 @@ except: {{#ifEquals dataProjection "query-for-aggregate"}}false{{else}}true{{/if
         watch: {
         },
         methods: {
-            {{nameCamelCase}}() {
-                this.$emit('{{nameCamelCase}}', this.value);
+            search() {
+                this.$emit('search', this.value);
             },
             close() {
                 this.$emit('closeDialog');
