@@ -57,9 +57,9 @@ except: {{#ifEquals dataProjection "query-for-aggregate"}}false{{else}}true{{/if
             },
         }),
         created() {
-        {{#fieldDescriptors}}
+        {{#queryParameters}}
             this.value.parameters.{{nameCamelCase}} = {{#setDefaultValue className}}{{/setDefaultValue}};
-        {{/fieldDescriptors}}
+        {{/queryParameters}}
         },
         watch: {
         },
@@ -79,6 +79,8 @@ except: {{#ifEquals dataProjection "query-for-aggregate"}}false{{else}}true{{/if
 
 
 <function>
+
+//if(this.queryParameters!=null) alert(this.queryParameters)
 
     window.$HandleBars.registerHelper('print', function (value) {
         console.log(value)
