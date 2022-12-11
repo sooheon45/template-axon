@@ -1,5 +1,3 @@
-
-
 forEach: View
 representativeFor: View
 fileName: {{namePascalCase}}Query.java
@@ -13,7 +11,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 {{importTypes queryParameters}}
 
-
 public class {{namePascalCase}}Query {
 
     {{#queryParameters}}
@@ -25,3 +22,32 @@ public class {{namePascalCase}}Query {
     
 }
 
+<function>
+
+
+window.$HandleBars.registerHelper('importTypes', function (fieldDescriptors) {
+    var imports = "";
+debugger; 
+    var typeMappings = {
+        "Date": "java.util.Date",
+        "BigDecimal": "java.math.BigDecimal"
+    };
+
+    if(fieldDescriptors)
+    for(var i = 0; i < fieldDescriptors.length; i ++ ){
+        if(fieldDescriptors[i]){
+            var fullTypeName = typeMappings[fieldDescriptors[i].className];
+
+            if(fullTypeName){
+                imports += "import " + fullTypeName + ";\n";
+                typeMappings[fieldDescriptors[i].className] = null;
+            }
+        } 
+    }
+
+    return imports;
+});
+
+
+
+</function>
