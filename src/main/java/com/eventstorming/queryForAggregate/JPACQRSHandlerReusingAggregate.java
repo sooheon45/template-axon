@@ -15,6 +15,9 @@ import {{options.package}}.aggregate.*;
 import org.axonframework.config.ProcessingGroup;
 import org.axonframework.eventhandling.EventHandler;
 import org.axonframework.queryhandling.QueryHandler;
+//<<< Etc / RSocket
+import org.axonframework.queryhandling.QueryUpdateEmitter;
+//>>> Etc / RSocket
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.BeanUtils;
@@ -34,6 +37,11 @@ public class {{namePascalCase}}CQRSHandlerReusingAggregate {
 //<<< EDA / CQRS
     @Autowired
     private {{aggregate.namePascalCase}}ReadModelRepository repository;
+
+//<<< Etc / RSocket
+    @Autowired
+    private QueryUpdateEmitter queryUpdateEmitter;
+//>>> Etc / RSocket
 
     @QueryHandler
     public List<{{aggregate.namePascalCase}}ReadModel> handle({{namePascalCase}}Query query) {
@@ -56,6 +64,13 @@ public class {{namePascalCase}}CQRSHandlerReusingAggregate {
         BeanUtils.copyProperties(aggregate, entity);
         
         repository.save(entity);
+
+//<<< Etc / RSocket
+        queryUpdateEmitter.emit(
+            {{namePascalCase}}Query.class,
+            query -> true,
+            entity);
+//>>> Etc / RSocket
 
     }
         {{else}}

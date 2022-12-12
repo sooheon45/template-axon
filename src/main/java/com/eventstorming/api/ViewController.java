@@ -23,6 +23,12 @@ import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import reactor.core.publisher.Flux;
+import org.axonframework.extensions.reactor.queryhandling.gateway.ReactorQueryGateway;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+
+
 import {{options.package}}.query.*;
 
 

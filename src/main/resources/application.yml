@@ -7,10 +7,6 @@ server:
   port: 8080
   error:
     include-message: always
-    
----
-spring:
-  profiles: default
   jpa:
     hibernate:
       naming:
@@ -27,9 +23,32 @@ spring:
     password: rootpassword
     driver-class-name: com.mysql.cj.jdbc.Driver
 
+---
+spring:
+  profiles: default
+//<<< Etc / RSocket
+  rsocket:
+    server:
+      mapping-path: /rsocket
+      transport: websocket
+      port: {{contexts.rSocketPort}}
+//>>> Etc / RSocket
+
 server:
   port: {{portGenerated}}
+
 ---
 spring:
   profiles: docker
 
+  rsocket:
+    server:
+      mapping-path: /rsocket
+      transport: websocket
+      port: 7000
+
+<function>
+
+this.contexts.rSocketPort = parseInt(this.portGenerated) - 1080    // make port number from 7001
+
+</function>
