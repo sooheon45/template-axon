@@ -1,8 +1,3 @@
-
-
-
-
-
 forEach: View
 fileName: {{namePascalCase}}QueryController.java
 path: {{boundedContext.name}}/{{{options.packagePath}}}/api
@@ -106,6 +101,12 @@ public class {{@root.namePascalCase}}QueryController {
       {{/ifEquals}}
       {{/@root.contexts.target.commands}}
     {{/@root.contexts.isNotCQRS}}
+
+    model.add(
+        Link
+        .of("/{{namePlural}}/events")
+        .withRel("events")
+    );
 
     return model;
   }

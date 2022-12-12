@@ -122,6 +122,12 @@ public class {{ namePascalCase }}Controller {
 
     {{/commands}}
 
+    model.add(
+        Link
+        .of("/{{namePlural}}/events")
+        .withRel("events")
+    );
+
     return model;
   }
 
