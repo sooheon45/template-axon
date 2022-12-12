@@ -15,9 +15,7 @@ import {{options.package}}.aggregate.*;
 import org.axonframework.config.ProcessingGroup;
 import org.axonframework.eventhandling.EventHandler;
 import org.axonframework.queryhandling.QueryHandler;
-//<<< Etc / RSocket
 import org.axonframework.queryhandling.QueryUpdateEmitter;
-//>>> Etc / RSocket
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.BeanUtils;
