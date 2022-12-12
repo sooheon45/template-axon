@@ -93,20 +93,21 @@ public class {{@root.namePascalCase}}QueryController {
     {{#@root.contexts.isNotCQRS}}
       {{#@root.contexts.target.commands}}
       {{#ifEquals isRestRepository false}}
-          model.add(
-              Link
-              .of("/{{../namePlural}}/" + resource.get{{../../contexts.keyField}}() + "/{{controllerInfo.apiPath}}")
-              .withRel("{{controllerInfo.apiPath}}")
-          );
+    model.add(
+        Link
+        .of("/{{../namePlural}}/" + resource.get{{../../contexts.keyField}}() + "/{{controllerInfo.apiPath}}")
+        .withRel("{{controllerInfo.apiPath}}")
+    );
       {{/ifEquals}}
       {{/@root.contexts.target.commands}}
-    {{/@root.contexts.isNotCQRS}}
 
     model.add(
         Link
         .of("/{{namePlural}}/events")
         .withRel("events")
     );
+
+    {{/@root.contexts.isNotCQRS}}
 
     return model;
   }
