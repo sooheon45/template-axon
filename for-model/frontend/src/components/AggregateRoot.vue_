@@ -38,6 +38,12 @@ path: frontend/src/components
         {{/if}}
         {{/if}}
         {{/aggregateRoot.fieldDescriptors}}
+
+            <EventViewer
+                v-if="value._links.events"
+                :src="value._links.events.href"
+            >
+            </EventViewer>
         </v-card-text>
 
         <v-card-actions>
