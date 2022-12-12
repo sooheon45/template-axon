@@ -120,6 +120,16 @@ public class {{@root.namePascalCase}}QueryController {
 
   {{/contexts.target}}
 
+
+//<<< Etc / RSocket
+    @MessageMapping("{{namePlural}}.{vacationId}.get")
+    public Flux<{{@root.contexts.readModelClass}}> vacation_subscribe(@DestinationVariable String id) {
+        return reactorQueryGateway
+                .subscriptionQueryMany(new {{@root.namePascalCase}}Query(), {{@root.contexts.readModelClass}}.class);
+    }
+//>>> Etc / RSocket
+
+
 }
 
 <function>
