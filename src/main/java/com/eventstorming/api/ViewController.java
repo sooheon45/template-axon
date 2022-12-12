@@ -122,7 +122,7 @@ public class {{@root.namePascalCase}}QueryController {
 
 
 //<<< Etc / RSocket
-    @MessageMapping("{{namePlural}}.{vacationId}.get")
+    @MessageMapping("{{namePlural}}.{id}.get")
     public Flux<{{@root.contexts.readModelClass}}> vacation_subscribe(@DestinationVariable String id) {
         return reactorQueryGateway
                 .subscriptionQueryMany(new {{@root.namePascalCase}}Query(), {{@root.contexts.readModelClass}}.class);
