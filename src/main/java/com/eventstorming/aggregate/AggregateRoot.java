@@ -106,7 +106,6 @@ public class {{namePascalCase}}Aggregate {
 
 
 
-
 //<<< EDA / Event Sourcing
 
     {{#events}}
@@ -123,6 +122,7 @@ public class {{namePascalCase}}Aggregate {
     {{/events}}
 //>>> EDA / Event Sourcing
 
+
 }
 //>>> DDD / Aggregate Root
 
@@ -136,6 +136,7 @@ window.$HandleBars.registerHelper('jp', function (jsonPath) {
 });
 
 window.$HandleBars.registerHelper('isCreationEvent', function (options) {
+    if(this.incomingCommandRefs)
     for(var i=0; i<this.incomingCommandRefs.length; i++)
         if(checkCommandIsRepositoryPost(this.incomingCommandRefs[i].value)) return options.fn(this);
 
