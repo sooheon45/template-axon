@@ -43,11 +43,11 @@ public class {{@root.namePascalCase}}QueryController {
   private final ReactorQueryGateway reactorQueryGateway;
 //>>> Etc / Reactor
 
-  public {{@root.namePascalCase}}QueryController(QueryGateway queryGateway) {
+  public {{@root.namePascalCase}}QueryController(QueryGateway queryGateway, ReactorQueryGateway reactorQueryGateway) {
       this.queryGateway = queryGateway;
+      this.reactorQueryGateway = reactorQueryGateway;
   }
   
-
   @GetMapping("/{{namePlural}}")
   public CompletableFuture findAll({{@root.namePascalCase}}Query query) {
       return queryGateway.query(query , ResponseTypes.multipleInstancesOf({{@root.contexts.readModelClass}}.class))

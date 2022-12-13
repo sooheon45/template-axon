@@ -7,6 +7,7 @@
 
 
 
+
 forEach: Aggregate
 fileName: {{namePascalCase}}Cards.vue
 path: frontend/src/components/listers
