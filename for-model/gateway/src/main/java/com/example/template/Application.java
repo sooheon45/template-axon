@@ -1,4 +1,7 @@
-path: /src/main/java/com/example/template
+forEach: Model
+fileName: Application.java
+
+path: gateway/{{{options.packagePath}}}
 ---
 package {{options.package}};
 {{#if (isSelectedSecurity selectedSecurity)}}
@@ -37,6 +40,8 @@ public class Application {
 
 
 <function>
+
+	this.options.packagePath = "src/main/java/" + this.options.package.replaceAll(".", "/")
 	window.$HandleBars.registerHelper('isSelectedSecurity', function (selectedSecurity) {
 		try{
 			if(!selectedSecurity)
