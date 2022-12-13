@@ -64,7 +64,7 @@ public class {{namePascalCase}}CQRSHandlerReusingAggregate {
         repository.save(entity);
 
 //<<< Etc / RSocket
-        queryUpdateEmitter.emit({{namePascalCase}}Query.class, query -> true, entity);
+        queryUpdateEmitter.emit({{@root.namePascalCase}}Query.class, query -> true, entity);
 //>>> Etc / RSocket
 
     }
@@ -82,6 +82,10 @@ public class {{namePascalCase}}CQRSHandlerReusingAggregate {
                 BeanUtils.copyProperties(aggregate, entity);
 
                 repository.save(entity);
+
+//<<< Etc / RSocket
+                queryUpdateEmitter.emit({{@root.namePascalCase}}Query.class, query -> true, entity);
+//>>> Etc / RSocket
 
             });
 
