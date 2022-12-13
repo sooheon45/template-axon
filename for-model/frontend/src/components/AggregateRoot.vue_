@@ -211,6 +211,81 @@ path: frontend/src/components
         {{/isRestRepository}}
         {{/commands}}
         }),
+        created(){
+            var websocketUrl = new URL(window.location.href);
+
+            websocketUrl.protocol = "wss";
+            websocketUrl.pathname = "/rsocket/{{@root.namePlural}}";
+            websocketUrl.hash = "";
+            
+            var me = this;
+
+            const transport = new RSocketWebSocketClient(
+                {
+                    url: websocketUrl.href
+                }
+            );
+            const client = new RSocketClient({
+                // send/receive JSON objects instead of strings/buffers
+                serializers: {
+                data: JsonSerializer,
+                metadata: IdentitySerializer
+                },
+                setup: {
+                // ms btw sending keepalive to server
+                keepAlive: 60000,
+                // ms timeout if no keep-alive response
+                lifetime: 180000,
+                dataMimeType: "application/json",
+                metadataMimeType: 'message/x.rsocket.routing.v0'
+                },
+                transport
+            });
+            client.connect().subscribe({
+                onComplete: socket => {
+                let requestedMsg = 10;
+                let processedMsg = 0;
+
+                // console.log("connected to rsocket"); // debug
+                const endpoint = "{{@root.namePlural}}.1.get"
+                socket.requestStream({
+                    data: {},
+                    metadata: String.fromCharCode(endpoint.length) + endpoint
+                })
+                    .subscribe({
+                        /*
+                        we create an infinite stream and to do so, in the callback
+                        of the onNext event we request new messages every time
+                        the client received the previously requested n messages
+                        */
+                        onSubscribe: (sub) => {
+                            console.log("subscribed to server stream"); // debug
+                            this.requestStreamSubscription = sub
+                            this.requestStreamSubscription.request(requestedMsg)
+                        },
+                        onNext: (e) => {
+                            me.value = e.data
+                        },
+                        onError: error => {
+                        // console.log("got error with requestStream"); // debug
+                        console.error(error);
+                        },
+                        onComplete: () => {
+                        // console.log("requestStream completed"); // debug
+                        }
+                    });
+                },
+                onError: error => {
+                // console.log("got connection error"); // debug
+                console.error(error);
+                },
+                // eslint-disable-next-line no-unused-vars
+                onSubscribe: cancel => {
+                /* call cancel() to abort */
+                }
+            });
+
+        },
         computed:{
             {{#if (isSelectedSecurity selectedSecurity)}}
             userRoles() {
