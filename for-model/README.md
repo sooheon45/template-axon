@@ -26,6 +26,20 @@ cd ..
 {{/boundedContexts}}
 '''
 
+## Test RSocket APIs
+
+- Download RSocket client
+```
+wget -O rsc.jar https://github.com/making/rsc/releases/download/0.4.2/rsc-0.4.2.jar
+```
+- Subscribe the stream
+```
+{{#boundedContexts}}
+java -jar rsc.jar --stream  --route {{namePlural}}.all ws://localhost:8088/rsocket/{{namePlural}}
+
+{{/boundedContexts}}
+```
+
 <function>
 
 window.$HandleBars.registerHelper('ifEquals', function (arg1, arg2, options) {

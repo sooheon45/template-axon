@@ -75,7 +75,7 @@ public class {{namePascalCase}}Aggregate {
 
 //<<< Etc / ID Generation
     private String createUUID() {
-        return null;
+        return UUID.randomUUID().toString();
     }
 //>>> Etc / ID Generation
 
