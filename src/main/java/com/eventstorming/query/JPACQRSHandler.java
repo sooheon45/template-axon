@@ -62,7 +62,7 @@ public class {{namePascalCase}}CQRSHandler {
         // view 객체 조회
         {{#where}}
         {{#viewField.isKey}}
-        Optional<{{../../namePascalCase}}> {{../../nameCamelCase}}Optional = {{../../nameCamelCase}}Repository.findBy{{viewField.namePascalCase}}({{#typeCasting viewField ../when.nameCamelCase eventField}}{{/typeCasting}});
+        Optional<{{../../namePascalCase}}> {{../../nameCamelCase}}Optional = {{../../nameCamelCase}}Repository.findBy{{#viewField.isKey}}Id{{else}}{{viewField.namePascalCase}}{{/viewField.isKey}}({{typeCasting viewField ../when.nameCamelCase eventField}});
 
         if( {{../../nameCamelCase}}Optional.isPresent()) {
                 {{../../namePascalCase}} {{../../nameCamelCase}} = {{../../nameCamelCase}}Optional.get();
@@ -119,6 +119,7 @@ public class {{namePascalCase}}CQRSHandler {
 
 <function>
 this.contexts.isNotCQRS = this.dataProjection!="cqrs"//(this.dataProjection == "QUERY-FOR-AGGREGATE")
+
 
 window.$HandleBars.registerHelper('isOperator', function (value) {
         return value == '=';
