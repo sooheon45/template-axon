@@ -75,7 +75,7 @@ public class {{ namePascalCase }}Controller {
   @RequestMapping(value = "/{{ aggregate.namePlural }}/{id}/{{controllerInfo.apiPath}}",
         method = RequestMethod.{{controllerInfo.method}},
         produces = "application/json;charset=UTF-8")
-  public CompletableFuture {{nameCamelCase}}(@PathVariable("id") {{aggregate.aggregateRoot.keyFieldDescriptor.className}} id{{#ifHasBody}}, @RequestBody {{namePascalCase}}Command {{nameCamelCase}}Command){{/ifHasBody}})
+  public CompletableFuture {{nameCamelCase}}(@PathVariable("id") {{aggregate.aggregateRoot.keyFieldDescriptor.className}} id{{#ifHasBody}}, @RequestBody {{namePascalCase}}Command {{nameCamelCase}}Command{{/ifHasBody}})
         throws Exception {
       System.out.println("##### /{{aggregate.nameCamelCase}}/{{nameCamelCase}}  called #####");
       {{^ifHasBody}}{{namePascalCase}}Command {{nameCamelCase}}Command = new {{namePascalCase}}Command();{{/ifHasBody}}

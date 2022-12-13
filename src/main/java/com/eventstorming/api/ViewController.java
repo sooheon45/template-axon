@@ -112,7 +112,7 @@ public class {{@root.namePascalCase}}QueryController {
 
     model.add(
         Link
-        .of("/{{namePlural}}/events")
+        .of("/{{namePlural}}/"+ resource.get{{@root.contexts.keyField}}() + "/events")
         .withRel("events")
     );
 
