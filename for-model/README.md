@@ -15,16 +15,19 @@ docker-compose up
 
 '''
 cd common-api
-mvn install
+mvn clean install
 cd ..
 
 {{#boundedContexts}}
 cd {{name}}
-mvn spring-boot:run
+mvn clean spring-boot:run
 cd ..
 
 {{/boundedContexts}}
 '''
+
+## Test Rest APIs
+
 
 ## Test RSocket APIs
 

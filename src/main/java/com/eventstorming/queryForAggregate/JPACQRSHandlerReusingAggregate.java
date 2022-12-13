@@ -84,7 +84,7 @@ public class {{namePascalCase}}CQRSHandlerReusingAggregate {
                 repository.save(entity);
 
 //<<< Etc / RSocket
-                queryUpdateEmitter.emit({{@root.namePascalCase}}SingleQuery.class, query -> query.get{{@root.aggregate.aggregateRoot.keyFieldDescriptor.namePascalCase}}().equals(event.get{{@root.aggregate.aggregateRoot.keyFieldDescriptor.namePascalCase}}(), entity);
+                queryUpdateEmitter.emit({{@root.namePascalCase}}SingleQuery.class, query -> query.get{{@root.aggregate.aggregateRoot.keyFieldDescriptor.namePascalCase}}().equals(event.get{{@root.aggregate.aggregateRoot.keyFieldDescriptor.namePascalCase}}()), entity);
 //>>> Etc / RSocket
 
             });

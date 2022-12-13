@@ -39,9 +39,9 @@ public class {{@root.namePascalCase}}QueryController {
 
   private final QueryGateway queryGateway;
 
-//<<< Etc / Reactor
+//<<< Etc / RSocket
   private final ReactorQueryGateway reactorQueryGateway;
-//>>> Etc / Reactor
+//>>> Etc / RSocket
 
   public {{@root.namePascalCase}}QueryController(QueryGateway queryGateway, ReactorQueryGateway reactorQueryGateway) {
       this.queryGateway = queryGateway;
@@ -129,7 +129,7 @@ public class {{@root.namePascalCase}}QueryController {
     }
 
     @MessageMapping("{{namePlural}}.{id}.get")
-    public Flux<VacationReadModel> subscribeSingle(
+    public Flux<{{@root.contexts.readModelClass}}> subscribeSingle(
         @DestinationVariable {{@root.contexts.keyFieldClass}} id
     ) {
         {{@root.namePascalCase}}SingleQuery query = new {{@root.namePascalCase}}SingleQuery();
