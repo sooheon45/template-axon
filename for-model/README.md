@@ -70,5 +70,9 @@ window.$HandleBars.registerHelper('importTypes', function (fieldDescriptors) {
     return imports;
 });
 
+  window.$HandleBars.registerHelper('websocketPort', function (httpPort) {
+    return parseInt(httpPort) - 1000;
+  })
+
 
 </function>

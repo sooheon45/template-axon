@@ -1,3 +1,7 @@
+forEach: Model
+fileName: application.yml
+path: for-model/gateway/src/main/resources
+---
 server:
   port: 8088
 
@@ -13,6 +17,10 @@ spring:
           uri: http://localhost:{{portGenerated}}
           predicates:
             - Path={{#printRoute aggregates}}{{/printRoute}}, {{#printRouteView viewes}}{{/printRouteView}}{{#each aggregates}}{{#each aggregateRoot.entities.relations}}{{#if (isGeneralization targetElement.namePascalCase ../namePascalCase relationType)}}, /{{#toURL sourceElement.nameCamelCase}}{{/toURL}}/**{{/if}}{{/each}}{{/each}}
+        - id: {{name}}_websocket
+          uri: http://localhost:{{websocketPort portGenerated}}
+          predicates:
+            - Path=/rsocket/{{namePlural}}
         {{/boundedContexts}}
         - id: frontend
           uri: http://localhost:8080
@@ -62,6 +70,8 @@ server:
   port: 8080
 
 <function>
+
+
   window.$HandleBars.registerHelper('printRoute', function (aggregates) {
     try{
       if(!aggregates)
