@@ -217,6 +217,8 @@ path: frontend/src/components
         {{/commands}}
         }),
         created(){
+            if(this.isNew) return;
+
             var websocketUrl = new URL(window.location.href);
 
             websocketUrl.protocol = "wss";
@@ -249,7 +251,6 @@ path: frontend/src/components
             client.connect().subscribe({
                 onComplete: socket => {
                 let requestedMsg = 10;
-                let processedMsg = 0;
 
                 // console.log("connected to rsocket"); // debug
                 const endpoint = "{{@root.namePlural}}.1.get"
@@ -278,8 +279,8 @@ path: frontend/src/components
                 onError: error => {
                     console.error(error);
                 },
-                onSubscribe: cancel => {
-                }
+                // onSubscribe: cancel => {
+                // }
             });
 
         },

@@ -24,7 +24,19 @@ mvn clean spring-boot:run
 cd ..
 
 {{/boundedContexts}}
+
+cd gateway
+mvn clean spring-boot:run
+cd ..
+
+cd frontend
+npm i
+npm run serve
+
 '''
+
+## Test By UI
+Head to http://localhost:8088 with a web browser
 
 ## Test Rest APIs
 
