@@ -107,9 +107,9 @@ public class {{namePascalCase}}Aggregate {
 
 
 
+//<<< EDA / Event Sourcing
 
     {{#events}}
-//<<< EDA / Event Sourcing
     
     @EventSourcingHandler
     public void on({{namePascalCase}}Event event) {
