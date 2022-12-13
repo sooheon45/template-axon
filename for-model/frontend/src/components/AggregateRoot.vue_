@@ -253,11 +253,6 @@ path: frontend/src/components
                     metadata: String.fromCharCode(endpoint.length) + endpoint
                 })
                     .subscribe({
-                        /*
-                        we create an infinite stream and to do so, in the callback
-                        of the onNext event we request new messages every time
-                        the client received the previously requested n messages
-                        */
                         onSubscribe: (sub) => {
                             console.log("subscribed to server stream"); // debug
                             this.requestStreamSubscription = sub
@@ -267,21 +262,18 @@ path: frontend/src/components
                             me.value = e.data
                         },
                         onError: error => {
-                        // console.log("got error with requestStream"); // debug
-                        console.error(error);
+                            // console.log("got error with requestStream"); // debug
+                            console.error(error);
                         },
                         onComplete: () => {
-                        // console.log("requestStream completed"); // debug
+                            // console.log("requestStream completed"); // debug
                         }
                     });
                 },
                 onError: error => {
-                // console.log("got connection error"); // debug
-                console.error(error);
+                    console.error(error);
                 },
-                // eslint-disable-next-line no-unused-vars
                 onSubscribe: cancel => {
-                /* call cancel() to abort */
                 }
             });
 

@@ -12,6 +12,7 @@ spring:
     gateway:
 //<<< API Gateway / Routes
       routes:
+
         {{#boundedContexts}}
         - id: {{name}}
           uri: http://localhost:{{portGenerated}}
@@ -21,12 +22,15 @@ spring:
           uri: http://localhost:{{websocketPort portGenerated}}
           predicates:
             - Path=/rsocket/{{namePlural}}
+
         {{/boundedContexts}}
+        
         - id: frontend
           uri: http://localhost:8080
           predicates:
             - Path=/**
 //>>> API Gateway / Routes
+
       globalcors:
         corsConfigurations:
           '[/**]':
