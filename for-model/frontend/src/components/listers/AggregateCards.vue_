@@ -248,7 +248,8 @@ path: frontend/src/components/listers
 
     var me = this;
     me.contexts.views = [];
-    this.boundedContext.views.forEach(view=>{
+    if(this.boundedContext.readModels)
+    this.boundedContext.readModels.forEach(view=>{
         if(view.aggregate == me && view.dataProjection=="query-for-aggregate"){
             me.contexts.views.push(view);
         }
