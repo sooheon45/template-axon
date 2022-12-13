@@ -52,10 +52,7 @@ public class {{namePascalCase}}Aggregate {
         BeanUtils.copyProperties(command, event);     
 
         {{#if (isRepositoryPost ../this)}}
-        //<<< Etc / ID Generation
-        //Please uncomment here and implement the createUUID method.
-        //event.setId(createUUID());
-        //>>> Etc / ID Generation
+        event.set{{@root.aggregateRoot.keyFieldDescriptor.namePascalCase}}(createUUID());
         {{/if}}
 
         apply(event);
@@ -75,6 +72,12 @@ public class {{namePascalCase}}Aggregate {
     }
 
     {{/commands}}
+
+//<<< Etc / ID Generation
+    private String createUUID() {
+        return null;
+    }
+//>>> Etc / ID Generation
 
     {{#policies}}
 
