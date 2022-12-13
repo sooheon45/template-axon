@@ -140,8 +140,8 @@ public class {{ namePascalCase }}Controller {
 <function>
 
   window.$HandleBars.registerHelper("ifHasBody", function(options){
-    debugger;  
-    return this.fieldDescriptors.length > 1 ? options.fn(this) : options.inverse(this)
+   //if(this.name=="approve") debugger;  
+    return this.fieldDescriptors.length > 0 ? options.fn(this) : options.inverse(this)
   })
 
 </function>
