@@ -1,6 +1,4 @@
 
-
-
 forEach: Event
 fileName: {{namePascalCase}}Event.java
 path: common-api/{{{options.packagePath}}}/event

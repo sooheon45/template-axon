@@ -60,7 +60,6 @@ public class {{namePascalCase}}Saga {
 
 <function>
 
-debugger; 
 if(this.isSaga){
 
     var eventByNames = []
