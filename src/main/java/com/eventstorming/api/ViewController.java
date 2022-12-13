@@ -122,10 +122,23 @@ public class {{@root.namePascalCase}}QueryController {
   }
 
   //<<< Etc / RSocket
-    @MessageMapping("{{namePlural}}.{id}.get")
-    public Flux<{{@root.contexts.readModelClass}}> vacation_subscribe(@DestinationVariable String id) {
+    @MessageMapping("{{namePlural}}.all")
+    public Flux<{{@root.contexts.readModelClass}}> subscribeAll() {
         return reactorQueryGateway
                 .subscriptionQueryMany(new {{@root.namePascalCase}}Query(), {{@root.contexts.readModelClass}}.class);
+    }
+
+    @MessageMapping("{{namePlural}}.{id}.get")
+    public Flux<VacationReadModel> subscribeSingle(
+        @DestinationVariable {{@root.contexts.keyFieldClass}} id
+    ) {
+        {{@root.namePascalCase}}SingleQuery query = new {{@root.namePascalCase}}SingleQuery();
+        query.set{{@root.contexts.keyField}}(id);
+
+        return reactorQueryGateway.subscriptionQuery(
+            query,
+            {{@root.contexts.readModelClass}}.class
+        );
     }
 //>>> Etc / RSocket
 

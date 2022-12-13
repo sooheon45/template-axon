@@ -12,6 +12,7 @@ import org.axonframework.spring.stereotype.Aggregate;
 
 import org.springframework.beans.BeanUtils;
 import java.util.List;
+import java.util.UUID;
 
 import lombok.Data;
 import lombok.ToString;

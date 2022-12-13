@@ -124,7 +124,7 @@ public class {{ namePascalCase }}Controller {
 
     model.add(
         Link
-        .of("/{{namePlural}}/events")
+        .of("/{{namePlural}}/" + resource.get{{@root.aggregateRoot.keyFieldDescriptor.namePascalCase}}() + "/events")
         .withRel("events")
     );
 
