@@ -253,7 +253,7 @@ path: frontend/src/components
                 let requestedMsg = 10;
 
                 // console.log("connected to rsocket"); // debug
-                const endpoint = "{{@root.namePlural}}.1.get"
+                const endpoint = "{{@root.namePlural}}."+ me.value.{{@root.aggregateRoot.keyFieldDescriptor.nameCamelCase}} +".get"
                 socket.requestStream({
                     data: {},
                     metadata: String.fromCharCode(endpoint.length) + endpoint
@@ -265,7 +265,9 @@ path: frontend/src/components
                             this.requestStreamSubscription.request(requestedMsg)
                         },
                         onNext: (e) => {
+                            e.data._links = me.value._links;
                             me.value = e.data
+                            
                         },
                         onError: error => {
                             // console.log("got error with requestStream"); // debug

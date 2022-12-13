@@ -75,9 +75,10 @@ public class {{ namePascalCase }}Controller {
   @RequestMapping(value = "/{{ aggregate.namePlural }}/{id}/{{controllerInfo.apiPath}}",
         method = RequestMethod.{{controllerInfo.method}},
         produces = "application/json;charset=UTF-8")
-  public CompletableFuture {{nameCamelCase}}(@PathVariable("id") {{aggregate.aggregateRoot.keyFieldDescriptor.className}} id, @RequestBody {{namePascalCase}}Command {{nameCamelCase}}Command)
+  public CompletableFuture {{nameCamelCase}}(@PathVariable("id") {{aggregate.aggregateRoot.keyFieldDescriptor.className}} id{{#ifHasBody}}, @RequestBody {{namePascalCase}}Command {{nameCamelCase}}Command){{/ifHasBody}})
         throws Exception {
       System.out.println("##### /{{aggregate.nameCamelCase}}/{{nameCamelCase}}  called #####");
+      {{^ifHasBody}}{{namePascalCase}}Command {{nameCamelCase}}Command = new {{namePascalCase}}Command();{{/ifHasBody}}
       {{nameCamelCase}}Command.set{{aggregate.aggregateRoot.keyFieldDescriptor.namePascalCase}}(id);
       // send command
       return commandGateway.send({{nameCamelCase}}Command);
@@ -135,3 +136,12 @@ public class {{ namePascalCase }}Controller {
 
 }
 //>>> Clean Arch / Inbound Adaptor
+
+<function>
+
+  window.$HandleBars.registerHelper("ifHasBody", function(options){
+    debugger;  
+    return this.fieldDescriptors.length > 1 ? options.fn(this) : options.inverse(this)
+  })
+
+</function>
