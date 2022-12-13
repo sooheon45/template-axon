@@ -74,5 +74,10 @@ window.$HandleBars.registerHelper('importTypes', function (fieldDescriptors) {
     return parseInt(httpPort) - 1000;
   })
 
+  window.$HandleBars.registerHelper('breakpoint', function (value, value2) {
+    if(value == value2)
+        debugger;
+  })
+
 
 </function>
