@@ -1,4 +1,4 @@
-forEach: View
+RforEach: View
 fileName: {{namePascalCase}}QueryController.java
 path: {{boundedContext.name}}/{{{options.packagePath}}}/api
 _except: {{contexts.isNotCQRS}}
@@ -39,6 +39,9 @@ public class {{@root.namePascalCase}}QueryController {
 
   private final QueryGateway queryGateway;
 
+//<<< Etc / Reactor
+  private final ReactorQueryGateway reactorQueryGateway;
+//>>> Etc / Reactor
 
   public {{@root.namePascalCase}}QueryController(QueryGateway queryGateway) {
       this.queryGateway = queryGateway;
