@@ -40,7 +40,7 @@ path: frontend/src/components
         {{/aggregateRoot.fieldDescriptors}}
 
             <EventViewer
-                v-if="value._links.events"
+                v-if="value._links && value._links.events"
                 :src="value._links.events.href"
             >
             </EventViewer>
