@@ -1,5 +1,3 @@
-
-
 forEach: BoundedContext
 fileName: PolicyHandler.java
 
@@ -45,6 +43,7 @@ public class PolicyHandler{
         System.out.println({{eventValue.nameCamelCase}}.toString());
 
         {{../namePascalCase}}Command command = new {{../namePascalCase}}Command();
+        //TODO: mapping attributes (anti-corruption)
         commandGateway.send(command);
     }
         {{/relationEventInfo}}

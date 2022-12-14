@@ -121,6 +121,8 @@ public class {{namePascalCase}}Aggregate {
         BeanUtils.copyProperties(event, this);
         {{/isCreationEvent}}
 
+        //TODO: business logic here
+
     }
 
     {{/events}}
