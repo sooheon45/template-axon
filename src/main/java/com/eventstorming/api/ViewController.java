@@ -151,11 +151,18 @@ public class {{@root.namePascalCase}}QueryController {
 }
 
 <function>
+
+var me = this;
+this.boundedContext.aggregates.forEach(agg => {if(agg.name==me.name) me.aggregate = agg});
+
+
 this.contexts.isNotCQRS = this.dataProjection!="cqrs"
 
 this.contexts.keyField = "Long";
 this.contexts.keyFieldClass = "String";
 var me = this;
+
+
 
 if(this.dataProjection == "query-for-aggregate"){
   this.contexts.target = this.aggregate;
