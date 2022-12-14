@@ -1,7 +1,5 @@
 forEach: Model
 fileName: Application.java
-
-path: Apple/src/main/java/com/example/template
 ---
 package com.example.template;
 {{#if (isSelectedSecurity selectedSecurity)}}
