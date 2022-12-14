@@ -53,7 +53,9 @@ public class {{namePascalCase}}Aggregate {
         BeanUtils.copyProperties(command, event);     
 
         {{#if (isRepositoryPost ../this)}}
-        event.set{{@root.aggregateRoot.keyFieldDescriptor.namePascalCase}}(createUUID());
+        //TODO: check key generation is properly done
+        if(event.get{{@root.aggregateRoot.keyFieldDescriptor.namePascalCase}}()==null)
+            event.set{{@root.aggregateRoot.keyFieldDescriptor.namePascalCase}}(createUUID());
         {{/if}}
 
         apply(event);
