@@ -13,33 +13,50 @@ docker-compose up
 
 ## Build common API & Run each service
 
-'''
+- Build common API
+```
 cd common-api
 mvn clean install
 cd ..
+```
 
+- Run each service
+```
 {{#boundedContexts}}
 cd {{name}}
 mvn clean spring-boot:run
 cd ..
 
 {{/boundedContexts}}
+```
 
+- Run API gateway
+```
 cd gateway
 mvn clean spring-boot:run
 cd ..
+```
 
+- Run frontend server
+```
 cd frontend
 npm i
 npm run serve
 
-'''
+```
 
 ## Test By UI
 Head to http://localhost:8088 with a web browser
 
 ## Test Rest APIs
-
+{{#boundedContexts}}
+- {{name}}
+```
+{{#aggregates}}
+ http :8088/{{namePlural}} {{#aggregateRoot.fieldDescriptors}}{{name}}="{{name}}" {{/aggregateRoot.fieldDescriptors}}
+{{/aggregates}}
+```
+{{/boundedContexts}}
 
 ## Test RSocket APIs
 
