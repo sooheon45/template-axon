@@ -1,4 +1,3 @@
-
 forEach: View
 representativeFor: View
 fileName: {{aggregate.namePascalCase}}ReadModel.java
@@ -60,7 +59,10 @@ public class {{namePascalCase}}ReadModel {{#checkExtends aggregateRoot.entities.
 //>>> EDA / Read Model
 
 <function>
-this.aggregate = this.boundedContext.aggregates[0];
+var me = this;
+this.boundedContext.aggregates.forEach(agg => {if(agg.name==me.name) me.aggregate = agg});
+
+
 this.contexts.isNotQueryForAggregate = (this.dataProjection != "query-for-aggregate")
 
 window.$HandleBars.registerHelper('checkDateType', function (fieldDescriptors) {

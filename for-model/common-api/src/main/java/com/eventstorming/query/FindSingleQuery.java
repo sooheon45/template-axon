@@ -23,7 +23,10 @@ public class {{namePascalCase}}SingleQuery {
 var me = this;
 
 if(this.dataProjection == "query-for-aggregate"){
-  this.contexts.target = this.boundedContext.aggregates[0].aggregateRoot;
+  var me = this;
+  this.boundedContext.aggregates.forEach(agg => {if(agg.name==me.name) me.aggregate = agg});
+
+  this.contexts.target = this.aggregate.aggregateRoot;
   this.contexts.readModelClass = this.contexts.target.namePascalCase + "ReadModel";
 }else{
   this.contexts.target = this;
