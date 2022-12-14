@@ -4,7 +4,7 @@ forEach: BoundedContext
 fileName: PolicyHandler.java
 
 path: {{name}}/{{{options.packagePath}}}/policy
-except: {{contexts.isNotSaga}}
+except: {{isSaga}}
 
 ---
 package {{options.package}}.policy;
@@ -55,6 +55,3 @@ public class PolicyHandler{
 //>>> Clean Arch / Inbound Adaptor
 
 
-<function>
-this.contexts.isNotSaga = (this.fieldDescriptors == null);
-</function>
