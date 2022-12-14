@@ -17,15 +17,14 @@ docker-compose up
 ```
 cd common-api
 mvn clean install
-cd ..
 ```
 
 - Run each service
 ```
 {{#boundedContexts}}
+# new terminal
 cd {{name}}
 mvn clean spring-boot:run
-cd ..
 
 {{/boundedContexts}}
 ```
@@ -34,7 +33,6 @@ cd ..
 ```
 cd gateway
 mvn clean spring-boot:run
-cd ..
 ```
 
 - Run frontend server
