@@ -1,5 +1,6 @@
 forEach: Model
 fileName: Application.java
+path: common-test
 ---
 package com.example.template;
 {{#if (isSelectedSecurity selectedSecurity)}}
