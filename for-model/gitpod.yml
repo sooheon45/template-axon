@@ -1,2 +1,6 @@
+forEach: Model
+fileName: .gitpod.yml
+path: for-model
+---
 tasks:
  - init: sudo chmod u+x init.sh && ./init.sh
