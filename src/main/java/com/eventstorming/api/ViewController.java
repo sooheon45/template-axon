@@ -158,7 +158,7 @@ this.contexts.keyFieldClass = "String";
 var me = this;
 
 if(this.dataProjection == "query-for-aggregate"){
-  this.contexts.target = this.boundedContext.aggregates[0];
+  this.contexts.target = this.aggregate;
   this.contexts.readModelClass = this.contexts.target.namePascalCase + "ReadModel";
 
   this.contexts.target.aggregateRoot.fieldDescriptors.forEach(fd => {if(fd.isKey) {
