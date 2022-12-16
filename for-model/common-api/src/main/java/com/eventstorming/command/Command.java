@@ -73,27 +73,27 @@ public class {{namePascalCase}}Command {
 
 <function>
 
-    var theReadModel = null;
+    // var theReadModel = null;
 
-    this.outgoingReadModelRefs = [{
-        value: {
-            dataProjection: "query-for-aggregate",
-            aggregate: {
-                namePascalCase: "Calendar",
-                nameCamelCase: "calendar"
-            },
-            queryParameters: [
-                {
-                    namePascalCase: "UserId",
-                    className: "java.lang.String"
-                },
-                {
-                    namePascalCase: "From",
-                    className: "java.util.Date"
-                }
-            ]
-        }
-    }]
+    // this.outgoingReadModelRefs = [{
+    //     value: {
+    //         dataProjection: "query-for-aggregate",
+    //         aggregate: {
+    //             namePascalCase: "Calendar",
+    //             nameCamelCase: "calendar"
+    //         },
+    //         queryParameters: [
+    //             {
+    //                 namePascalCase: "UserId",
+    //                 className: "java.lang.String"
+    //             },
+    //             {
+    //                 namePascalCase: "From",
+    //                 className: "java.util.Date"
+    //             }
+    //         ]
+    //     }
+    // }]
 
     // if(this.outgoingReadModelRefs && this.outgoingReadModelRefs.length > 0){
     //     this

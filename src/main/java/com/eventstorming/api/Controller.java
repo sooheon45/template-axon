@@ -55,6 +55,22 @@ public class {{ namePascalCase }}Controller {
         throws Exception {
       System.out.println("##### /{{aggregate.nameCamelCase}}/{{nameCamelCase}}  called #####");
 
+      {{#outgoingReadModelRefs}}
+      {{#value}}
+      {{#ifEquals dataProjection "query-for-aggregate"}}
+      {{namePascalCase}}Query query = new {{nameCamelCase}}Query();
+
+      //TODO: set query parameters 
+      queryGateway.send(query, ).get().ifPresent(result -> {
+          command.set{{aggregate.namePascalCase}}(result);
+      }
+
+      {{else}}
+      {{namePascalCase}}ReadModel {{nameCamelCase}}ReadModel;
+      {{/ifEquals}}
+      {{/value}}
+      {{/outgoingReadModelRefs}}
+
       // send command
       return commandGateway.send({{nameCamelCase}}Command)            
             .thenApply(
@@ -138,6 +154,27 @@ public class {{ namePascalCase }}Controller {
 //>>> Clean Arch / Inbound Adaptor
 
 <function>
+
+
+    // this.commands[0].outgoingReadModelRefs = [{
+    //     value: {
+    //         dataProjection: "query-for-aggregate",
+    //         aggregate: {
+    //             namePascalCase: "Calendar",
+    //             nameCamelCase: "calendar"
+    //         },
+    //         queryParameters: [
+    //             {
+    //                 namePascalCase: "UserId",
+    //                 className: "java.lang.String"
+    //             },
+    //             {
+    //                 namePascalCase: "From",
+    //                 className: "java.util.Date"
+    //             }
+    //         ]
+    //     }
+    // }]
 
   window.$HandleBars.registerHelper("ifHasBody", function(options){
    //if(this.name=="approve") debugger;  
