@@ -1,4 +1,4 @@
-forEach: Aggregate
+.forEach: Aggregate
 fileName: {{namePascalCase}}Aggregate.java
 path: {{boundedContext.name}}/{{{options.packagePath}}}/aggregate
 ---
@@ -58,12 +58,26 @@ public class {{namePascalCase}}Aggregate {
             event.set{{@root.aggregateRoot.keyFieldDescriptor.namePascalCase}}(createUUID());
         {{/if}}
 
+
+   {{#../outgoingReadModelRefs}}
+    {{#value}}
+    {{#ifEquals dataProjection "query-for-aggregate"}}
+    {{aggregate.namePascalCase}}ReadModel {{aggregate.nameCamelCase}}ReadModel;
+    {{else}}
+    {{namePascalCase}}ReadModel {{nameCamelCase}}ReadModel;
+    {{/ifEquals}}
+    {{/value}}
+    {{//outgoingReadModelRefs}}
+
         apply(event);
 
         {{#relationCommandInfo}}
         {{#commandValue}}
         //Following code causes dependency to external APIs
         // it is NOT A GOOD PRACTICE. instead, Event-Policy mapping is recommended.
+
+
+   
 
         {{options.package}}.external.{{aggregate.namePascalCase}} {{aggregate.nameCamelCase}} = new {{options.package}}.external.{{aggregate.namePascalCase}}();
         // mappings goes here
@@ -136,6 +150,29 @@ public class {{namePascalCase}}Aggregate {
 
 
 <function>
+
+    var theReadModel = null;
+
+    this.commands[0].outgoingReadModelRefs = [{
+        value: {
+            dataProjection: "query-for-aggregate",
+            aggregate: {
+                namePascalCase: "Calendar",
+                nameCamelCase: "calendar"
+            },
+            queryParameters: [
+                {
+                    namePascalCase: "UserId",
+                    className: "java.lang.String"
+                },
+                {
+                    namePascalCase: "From",
+                    className: "java.util.Date"
+                }
+            ]
+        }
+    }]
+
 
 window.$HandleBars.registerHelper('jp', function (jsonPath) {
     var evaluatedVal = window.jp.query(this, jsonPath);
