@@ -14,6 +14,16 @@ import java.util.List;
 
 {{importTypes fieldDescriptors}}
 
+{{#outgoingReadModelRefs}}
+{{#value}}
+{{#ifEquals dataProjection "query-for-aggregate"}}
+import {{@root.options.package}}.{{aggregate.namePascalCase}}ReadModel;
+{{else}}
+import {{@root.options.package}}.{{namePascalCase}}ReadModel;
+{{/ifEquals}}
+{{/value}}
+{{/outgoingReadModelRefs}}
+
 @ToString
 @Data
 public class {{namePascalCase}}Command {
@@ -48,6 +58,46 @@ public class {{namePascalCase}}Command {
     {{/fieldDescriptors}}
 
     {{/if}}
+
+
+    {{#outgoingReadModelRefs}}
+    {{#value}}
+    {{#ifEquals dataProjection "query-for-aggregate"}}
+    {{aggregate.namePascalCase}}ReadModel {{aggregate.nameCamelCase}}ReadModel;
+    {{else}}
+    {{namePascalCase}}ReadModel {{nameCamelCase}}ReadModel;
+    {{/ifEquals}}
+    {{/value}}
+    {{/outgoingReadModelRefs}}
 }
 
+<function>
 
+    var theReadModel = null;
+
+    this.outgoingReadModelRefs = [{
+        value: {
+            dataProjection: "query-for-aggregate",
+            aggregate: {
+                namePascalCase: "Calendar",
+                nameCamelCase: "calendar"
+            },
+            queryParameters: [
+                {
+                    namePascalCase: "UserId",
+                    className: "java.lang.String"
+                },
+                {
+                    namePascalCase: "From",
+                    className: "java.util.Date"
+                }
+            ]
+        }
+    }]
+
+    // if(this.outgoingReadModelRefs && this.outgoingReadModelRefs.length > 0){
+    //     this
+    // }
+
+
+</function>
