@@ -72,6 +72,11 @@ java -jar rsc.jar --stream  --route {{namePlural}}.all ws://localhost:8088/rsock
 
 <function>
 
+window.$HandleBars.registerHelper('a', function (arg1, arg2, options) {
+    return "{{" + (Object.keys(this).join("}} {{"))
+});
+
+
 window.$HandleBars.registerHelper('ifEquals', function (arg1, arg2, options) {
     return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
 });
