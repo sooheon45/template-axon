@@ -2,7 +2,6 @@ forEach: BoundedContext
 fileName: PolicyHandler.java
 
 path: {{name}}/{{{options.packagePath}}}/policy
-except: {{isSaga}}
 
 ---
 package {{options.package}}.policy;
@@ -36,6 +35,7 @@ public class PolicyHandler{
     CommandGateway commandGateway;
 
     {{#policies}}
+    {{^isSaga}}
         {{#relationEventInfo}}
     @EventHandler
     //@DisallowReplay
@@ -47,6 +47,7 @@ public class PolicyHandler{
         commandGateway.send(command);
     }
         {{/relationEventInfo}}
+    {{/isSaga}}
     {{/policies}}
 
 }
