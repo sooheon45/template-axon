@@ -24,8 +24,8 @@ import java.util.UUID;
 
 @Component
 @Saga
-@ProcessingGroup("{{namePascalCase}}Saga")
-public class {{namePascalCase}}Saga {
+@ProcessingGroup("{{namePascalCase}}")
+public class {{namePascalCase}} {
 
     @Autowired
     private transient CommandGateway commandGateway;
